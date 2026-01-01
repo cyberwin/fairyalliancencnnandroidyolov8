@@ -28,6 +28,8 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
+import android.os.Handler;
 
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
