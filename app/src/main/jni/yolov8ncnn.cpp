@@ -185,17 +185,16 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
 
     __android_log_print(ANDROID_LOG_DEBUG, "ncnn", "loadModel %p", mgr);
 
-    const char* tasknames[6] =
+    const char* tasknames[8] =
     {
         "",
         "_oiv7",
         "_seg",
         "_pose",
         "_cls",
-        "_obb"
+        ,"_obb"
         ,"_wlzcfruit"
-    ,"_未来之窗水果"
-
+        ,"_pose"
     
     
     };
