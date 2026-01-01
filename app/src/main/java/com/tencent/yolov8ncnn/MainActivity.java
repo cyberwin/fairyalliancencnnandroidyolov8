@@ -28,8 +28,8 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
-//import android.widget.Toast;
-//import android.os.Handler;
+import android.widget.Toast;
+import android.os.Handler;
 
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -142,10 +142,10 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
         if (!ret_init)
         {
             Log.e("MainActivity", "yolov8ncnn loadModel failed");
-        //runOnUiThread(() -> Toast.makeText(MainActivity.this,"未来之窗加载失败，任务ID：" + current_task, Toast.LENGTH_LONG).show());
+        runOnUiThread(() -> Toast.makeText(MainActivity.this,"未来之窗加载失败，任务ID：" + current_task, Toast.LENGTH_LONG).show());
         }else{
             // 加载成功提示
-     //runOnUiThread(() -> Toast.makeText(MainActivity.this, "未来之窗加载成功，任务ID：" + current_task, Toast.LENGTH_SHORT).show());
+     runOnUiThread(() -> Toast.makeText(MainActivity.this, "未来之窗加载成功，任务ID：" + current_task, Toast.LENGTH_SHORT).show());
         }
     }
 
