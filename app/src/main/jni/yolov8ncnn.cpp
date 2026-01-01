@@ -192,9 +192,9 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
         "_seg",
         "_pose",
         "_cls",
-        ,"_obb"
-        ,"_wlzcfruit"
-        ,"_pose"
+        "_obb",
+        "_wlzcfruit",
+        "_pose"
     
     
     };
