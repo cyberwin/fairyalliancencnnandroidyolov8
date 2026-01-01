@@ -176,7 +176,7 @@ JNIEXPORT void JNI_OnUnload(JavaVM* vm, void* reserved)
 // public native boolean loadModel(AssetManager mgr, int taskid, int modelid, int cpugpu);
 JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIEnv* env, jobject thiz, jobject assetManager, jint taskid, jint modelid, jint cpugpu)
 {
-    if (taskid < 0 || taskid > 5 || modelid < 0 || modelid > 8 || cpugpu < 0 || cpugpu > 2)
+    if (taskid < 0 || taskid > 20 || modelid < 0 || modelid > 8 || cpugpu < 0 || cpugpu > 2)
     {
         return JNI_FALSE;
     }
@@ -193,6 +193,11 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
         "_pose",
         "_cls",
         "_obb"
+        ,"_wlzcfruit"
+    ,"_未来之窗水果"
+
+    
+    
     };
 
     const char* modeltypes[9] =
@@ -250,6 +255,8 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
                 if (taskid == 3) g_yolov8 = new YOLOv8_pose;
                 if (taskid == 4) g_yolov8 = new YOLOv8_cls;
                 if (taskid == 5) g_yolov8 = new YOLOv8_obb;
+                if (taskid == 6) g_yolov8 = new YOLOv8_seg;
+                if (taskid == 7) g_yolov8 = new YOLOv8_seg;
 
                 g_yolov8->load(mgr, parampath.c_str(), modelpath.c_str(), use_gpu || use_turnip);
             }
