@@ -185,7 +185,7 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
 
     __android_log_print(ANDROID_LOG_DEBUG, "ncnn", "loadModel %p", mgr);
 
-    const char* tasknames[8] =
+    const char* tasknames[9] =
     {
         "",
         "_oiv7",
@@ -194,6 +194,7 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
         "_cls",
         "_obb",
         "_wlzcfruit",
+    "_wlzcfruit",
         "_pose"
     
     
@@ -254,8 +255,9 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
                 if (taskid == 3) g_yolov8 = new YOLOv8_pose;
                 if (taskid == 4) g_yolov8 = new YOLOv8_cls;
                 if (taskid == 5) g_yolov8 = new YOLOv8_obb;
-                if (taskid == 6) g_yolov8 = new YOLOv8_seg;
-                if (taskid == 7) g_yolov8 = new YOLOv8_seg;
+                if (taskid == 6) g_yolov8 = new YOLOv8_det_coco;
+                if (taskid == 7) g_yolov8 = new YOLOv8_det_oiv7;
+                if (taskid == 8) g_yolov8 = new YOLOv8_seg;
 
                 g_yolov8->load(mgr, parampath.c_str(), modelpath.c_str(), use_gpu || use_turnip);
             }
