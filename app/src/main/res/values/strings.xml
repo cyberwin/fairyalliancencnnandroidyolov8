@@ -8,7 +8,8 @@
         <item>pose</item>
         <item>cls</item>
         <item>obb</item>
-        <item>wlzcfruit</item>
+         <item >wlzcfrui</item>
+        <item>未来之窗模型</item>
     </string-array>
     <string-array name="model_array">
         <item>n-320</item>
