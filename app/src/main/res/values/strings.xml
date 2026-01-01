@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">yolov8ncnn</string>
+    <string name="app_name">东方仙盟AI识别</string>
     <string-array name="task_array">
         <item>coco</item>
         <item>oiv7</item>
@@ -8,6 +8,7 @@
         <item>pose</item>
         <item>cls</item>
         <item>obb</item>
+        <item>wlzcfruit</item>
     </string-array>
     <string-array name="model_array">
         <item>n-320</item>
