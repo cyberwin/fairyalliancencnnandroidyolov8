@@ -255,7 +255,13 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
                 if (taskid == 3) g_yolov8 = new YOLOv8_pose;
                 if (taskid == 4) g_yolov8 = new YOLOv8_cls;
                 if (taskid == 5) g_yolov8 = new YOLOv8_obb;
-                if (taskid == 6) g_yolov8 = new YOLOv8_det_coco;
+                if if (taskid == 6)
+{
+    g_yolov8 = new YOLOv8_wlzc_fruit();
+    ((YOLOv8_wlzc_fruit*)g_yolov8)->load(mgr, param_path, bin_path, label_path, use_gpu);
+    ((YOLOv8_wlzc_fruit*)g_yolov8)->set_target_size(100, 100);
+}
+
                 if (taskid == 7) g_yolov8 = new YOLOv8_det_oiv7;
                 if (taskid == 8) g_yolov8 = new YOLOv8_seg;
 
