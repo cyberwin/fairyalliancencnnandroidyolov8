@@ -126,6 +126,7 @@ private:
 };
 */
 // yolov8.h 末尾添加 YOLOv8_wlzc_fruit 类（参数完全对齐）
+/*
 class YOLOv8_wlzc_fruit : public YOLOv8
 {
 public:
@@ -146,4 +147,33 @@ private:
     // 内部工具函数：加载标签（无需外部传参）
     int load_labels(AAssetManager* mgr);
 };
+*/
+// 先看父类 YOLOv8 的虚函数签名（原文件里的）
+
+
+// 修正 YOLOv8_wlzc_fruit 子类：override 方法必须和父类完全一致
+class YOLOv8_wlzc_fruit : public YOLOv8
+{
+public:
+    // 1. 重写 带 AAssetManager* 的 load 方法：和父类签名完全一致
+    virtual int load(AAssetManager* mgr, const char* parampath, const char* modelpath, bool use_gpu = false) override;
+
+    // 2. 重写 detect：和父类签名完全一致
+    virtual int detect(const cv::Mat& rgb, std::vector<Object>& objects) override;
+
+    // 3. 重写 draw：和父类签名完全一致
+    virtual int draw(cv::Mat& rgb, std::vector<Object>& objects) override;
+
+private:
+    ncnn::Net fruit_net;
+    std::vector<std::string> class_names;
+    float conf_threshold = 0.5f;
+    mutable std::string result_class;
+    mutable float result_conf;
+    const std::string label_path = "fruit_labels.txt";
+
+    // 内部工具函数：加载标签（不加 override）
+    int load_labels(AAssetManager* mgr);
+};
+
 #endif // YOLOV8_H
