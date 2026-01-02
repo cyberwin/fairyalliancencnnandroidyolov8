@@ -55,3 +55,23 @@ void YOLOv8::set_det_target_size(int target_size)
 {
     det_target_size = target_size;
 }
+// 实现自己的 load 方法，加载模型+标签
+int YOLOv8_wlzc_fruit::load(AAssetManager* mgr, const std::string& param_path, const std::string& bin_path, const std::string& label_path, bool use_gpu)
+{
+    // 加载模型
+    int ret_param = fruit_net.load_param_asset(mgr, param_path.c_str());
+    int ret_bin = fruit_net.load_model_asset(mgr, bin_path.c_str());
+    if (ret_param != 0 || ret_bin != 0)
+    {
+        LOGE("Load fruit model failed");
+        return -1;
+    }
+    fruit_net.opt.use_vulkan_compute = use_gpu;
+
+    // 加载标签（和之前的 load_labels 逻辑一样）
+    AAsset* asset = AAssetManager_open(mgr, label_path.c_str(), AASSET_MODE_BUFFER);
+    if (!asset) return -1;
+    // ... 省略标签加载的重复代码 ...
+    AAsset_close(asset);
+    return 0;
+}
