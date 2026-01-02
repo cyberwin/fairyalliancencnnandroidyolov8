@@ -255,23 +255,42 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_yolov8ncnn_YOLOv8Ncnn_loadModel(JNIE
                 if (taskid == 3) g_yolov8 = new YOLOv8_pose;
                 if (taskid == 4) g_yolov8 = new YOLOv8_cls;
                 if (taskid == 5) g_yolov8 = new YOLOv8_obb;
-                if if (taskid == 6)
-{
-    g_yolov8 = new YOLOv8_wlzc_fruit();
-    ((YOLOv8_wlzc_fruit*)g_yolov8)->load(mgr, param_path, bin_path, label_path, use_gpu);
-    ((YOLOv8_wlzc_fruit*)g_yolov8)->set_target_size(100, 100);
-}
+                 // ==================== 水果分类 taskid=6 分支 ====================
+                if (taskid == 6)
+                {
+                    g_yolov8 = new YOLOv8_wlzc_fruit();
+                    // 调用子类load：内部已包含 模型加载 + 标签加载（标签路径写死在yolov8.cpp里）
+                    ((YOLOv8_wlzc_fruit*)g_yolov8)->load(mgr, parampath.c_str(), modelpath.c_str(), use_gpu || use_turnip);
+                }
+            // ================================================================
 
                 if (taskid == 7) g_yolov8 = new YOLOv8_det_oiv7;
                 if (taskid == 8) g_yolov8 = new YOLOv8_seg;
 
-                g_yolov8->load(mgr, parampath.c_str(), modelpath.c_str(), use_gpu || use_turnip);
+                  // 通用模型加载（非taskid=6走这里）
+                if (taskid != 6)
+                {
+                   g_yolov8->load(mgr, parampath.c_str(), modelpath.c_str(), use_gpu || use_turnip);
+                }
+
+            // ==================== 统一设置尺寸 ====================
+
+               
             }
             int target_size = 320;
-            if ((int)modelid >= 3)
+            // taskid=6 强制设置为训练的100x100，其他任务按原有规则
+            if (taskid == 6)
+            {
+                target_size = 100;
+            }
+            else if ((int)modelid >= 3)
+             {
                 target_size = 480;
-            if ((int)modelid >= 6)
+            }
+            else if ((int)modelid >= 6)
+             {
                 target_size = 640;
+            }
             g_yolov8->set_det_target_size(target_size);
         }
     }
