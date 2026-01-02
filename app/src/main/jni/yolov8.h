@@ -100,4 +100,25 @@ public:
     virtual int draw(cv::Mat& rgb, const std::vector<Object>& objects);
 };
 
+// 在 yolov8.h 末尾，#endif 之前添加
+ class YOLOv8_wlzc_fruit : public YOLOv8_cls
+ {
+ public:
+     // 复用父类的 load 方法，新增加载标签的接口
+     int load_labels(AAssetManager* mgr, const std::string& label_path);
+     // 重写父类的 detect/draw 方法
+     virtual int detect(const cv::Mat& rgb, std::vector<Object>& objects) override;
+     virtual int draw(cv::Mat& rgb, const std::vector<Object>& objects) override;
+     // 设置分类置信度阈值
+     void set_cls_threshold(float conf) { conf_threshold = conf; }
+ private:
+     std::vector<std::string> class_names;
+     float conf_threshold = 0.5f;
+     int cls_target_w = 100;
+     int cls_target_h = 100;
+     // 存储分类结果
+     mutable std::string result_class;
+     mutable float result_conf;
+ };
+
 #endif // YOLOV8_H
