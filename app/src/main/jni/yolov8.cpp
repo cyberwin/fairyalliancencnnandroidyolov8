@@ -55,23 +55,49 @@ void YOLOv8::set_det_target_size(int target_size)
 {
     det_target_size = target_size;
 }
-// 实现自己的 load 方法，加载模型+标签
-int YOLOv8_wlzc_fruit::load(AAssetManager* mgr, const std::string& param_path, const std::string& bin_path, const std::string& label_path, bool use_gpu)
+
+//wlzc
+// YOLOv8_wlzc_fruit 的 load 方法：模型+标签一起加载
+int YOLOv8_wlzc_fruit::load(AAssetManager* mgr, const char* parampath, const char* modelpath, bool use_gpu)
 {
-    // 加载模型
-    int ret_param = fruit_net.load_param_asset(mgr, param_path.c_str());
-    int ret_bin = fruit_net.load_model_asset(mgr, bin_path.c_str());
+    // 1. 加载模型
+    int ret_param = fruit_net.load_param_asset(mgr, parampath);
+    int ret_bin = fruit_net.load_model_asset(mgr, modelpath);
     if (ret_param != 0 || ret_bin != 0)
     {
-        LOGE("Load fruit model failed");
+        LOGE("Load fruit model failed: %s %s", parampath, modelpath);
         return -1;
     }
     fruit_net.opt.use_vulkan_compute = use_gpu;
 
-    // 加载标签（和之前的 load_labels 逻辑一样）
+    // 2. 加载标签（路径写死在类内部，外部无需传参）
+    return load_labels(mgr);
+}
+
+// 内部工具函数：加载标签
+int YOLOv8_wlzc_fruit::load_labels(AAssetManager* mgr)
+{
     AAsset* asset = AAssetManager_open(mgr, label_path.c_str(), AASSET_MODE_BUFFER);
-    if (!asset) return -1;
-    // ... 省略标签加载的重复代码 ...
+    if (!asset)
+    {
+        LOGE("Open label file failed: %s", label_path.c_str());
+        return -1;
+    }
+
+    const char* data = (const char*)AAsset_getBuffer(asset);
+    int len = AAsset_getLength(asset);
+    std::string content(data, len);
+
+    size_t pos = 0;
+    while ((pos = content.find_first_of("\r\n")) != std::string::npos)
+    {
+        std::string line = content.substr(0, pos);
+        if (!line.empty()) class_names.push_back(line);
+        content.erase(0, pos + 1);
+    }
+    if (!content.empty()) class_names.push_back(content);
+
     AAsset_close(asset);
+    LOGD("Loaded %d fruit classes", (int)class_names.size());
     return 0;
 }
