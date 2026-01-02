@@ -102,6 +102,7 @@ public:
 
 // 在 yolov8.h 
 // 在 yolov8.h 末尾添加
+/*
 class YOLOv8_wlzc_fruit : public YOLOv8
 {
 public:
@@ -123,6 +124,26 @@ private:
     // 自己定义 Net，不再复用父类的 yolov8 成员
     ncnn::Net fruit_net;
 };
+*/
+// yolov8.h 末尾添加 YOLOv8_wlzc_fruit 类（参数完全对齐）
+class YOLOv8_wlzc_fruit : public YOLOv8
+{
+public:
+    // 声明：参数为 const char*（和父类一致，和调用/实现匹配），无外部传入label_path
+    virtual int load(AAssetManager* mgr, const char* parampath, const char* modelpath, bool use_gpu = false) override;
+    // 重写必须实现的虚函数（固定不变）
+    virtual int detect(const cv::Mat& rgb, std::vector<Object>& objects) override;
+    virtual int draw(cv::Mat& rgb, std::vector<Object>& objects) override;
 
-
+private:
+    ncnn::Net fruit_net;
+    std::vector<std::string> class_names;
+    float conf_threshold = 0.5f;
+    mutable std::string result_class;
+    mutable float result_conf;
+    // 标签路径内部写死（无需外部传递，解决路径配置问题）
+    const std::string label_path = "fruit_labels.txt";
+    // 内部工具函数：加载标签（无需外部传参）
+    int load_labels(AAssetManager* mgr);
+};
 #endif // YOLOV8_H
