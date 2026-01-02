@@ -56,7 +56,7 @@ void YOLOv8::set_det_target_size(int target_size)
     det_target_size = target_size;
 }
 
-//wlzc
+//wlzc 1
 // YOLOv8_wlzc_fruit 的 load 方法：模型+标签一起加载
 int YOLOv8_wlzc_fruit::load(AAssetManager* mgr, const char* parampath, const char* modelpath, bool use_gpu)
 {
