@@ -144,7 +144,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
             Log.e("MainActivity", "yolov8ncnn loadModel failed");
         runOnUiThread(() -> Toast.makeText(MainActivity.this,"未来之窗加载失败，任务ID：" + current_task, Toast.LENGTH_LONG).show());
         }else{
-            // 加载成功提示
+            //2 加载成功提示
      runOnUiThread(() -> Toast.makeText(MainActivity.this, "未来之窗加载成功，任务ID：" + current_task, Toast.LENGTH_SHORT).show());
         }
     }
