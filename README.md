@@ -8,6 +8,8 @@ This is a sample ncnn android project, it depends on ncnn library and opencv
 
 https://github.com/Tencent/ncnn
 
+东方仙盟
+
 https://github.com/nihui/opencv-mobile
 
 https://github.com/nihui/mesa-turnip-android-driver  (mesa turnip driver)
