@@ -8,7 +8,7 @@ This is a sample ncnn android project, it depends on ncnn library and opencv
 
 https://github.com/Tencent/ncnn
 
-东方仙盟2
+东方仙盟26
 
 https://github.com/nihui/opencv-mobile
 
